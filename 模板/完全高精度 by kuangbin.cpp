@@ -1,16 +1,16 @@
-/*ÍêÈ«¸ß¾«¶È
+/*å®Œå…¨é«˜ç²¾åº¦
 
-HDU 1134 Çó¿¨ÌØÀ¼Êı*/ 
+HDU 1134 æ±‚å¡ç‰¹å…°æ•°*/ 
 #include <iostream>
 #include <stdio.h>
 #include <algorithm>
 #include <string.h>
 using namespace std;
 /*
-*	ÍêÈ«´óÊıÄ£°å
-*	Êä³öcin>>a
-*	Êä³öa.print();
-*	×¢ÒâÕâ¸öÊäÈë²»ÄÜ×Ô¶¯È¥µôÇ°µ¼0µÄ£¬¿ÉÒÔÏÈ¶ÁÈëµ½charÊı×é£¬È¥µôÇ°µ¼0£¬ÔÙÓÃ¹¹Ôìº¯Êı¡£
+*	å®Œå…¨å¤§æ•°æ¨¡æ¿
+*	è¾“å‡ºcin>>a
+*	è¾“å‡ºa.print();
+*	æ³¨æ„è¿™ä¸ªè¾“å…¥ä¸èƒ½è‡ªåŠ¨å»æ‰å‰å¯¼0çš„ï¼Œå¯ä»¥å…ˆè¯»å…¥åˆ°charæ•°ç»„ï¼Œå»æ‰å‰å¯¼0ï¼Œå†ç”¨æ„é€ å‡½æ•°ã€‚
 */
 #define MAXN 9999
 #define MAXSIZE 1010
@@ -19,7 +19,7 @@ using namespace std;
 class BigNum
 {
 private:
-    int a[500]; //¿ÉÒÔ¿ØÖÆ´óÊıµÄÎ»Êı
+    int a[500]; //å¯ä»¥æ§åˆ¶å¤§æ•°çš„ä½æ•°
     int len;
 
 public:
@@ -27,26 +27,26 @@ public:
     {
         len = 1;
         memset(a, 0, sizeof(a));
-    }                                                //¹¹Ôìº¯Êı
-	BigNum(const int);	//½«Ò»¸öintÀàĞÍµÄ±äÁ¿×ª»¯³É´óÊı
-	BigNum(const char*);		//½«Ò»¸ö×Ö·û´®ÀàĞÍµÄ±äÁ¿×ª»¯Îª´óÊı
-	BigNum(const BigNum &); //¿½±´¹¹Ôìº¯Êı
-    BigNum &operator=(const BigNum &);               //ÖØÔØ¸³ÖµÔËËã·û£¬´óÊıÖ®¼ä½øĞĞ¸³ÖµÔËËã
-    friend istream &operator>>(istream &, BigNum &); //ÖØÔØÊäÈëÔËËã·û
-    friend ostream &operator<<(ostream &, BigNum &); //ÖØÔØÊä³öÔËËã·û
+    }                                                //æ„é€ å‡½æ•°
+	BigNum(const int);	//å°†ä¸€ä¸ªintç±»å‹çš„å˜é‡è½¬åŒ–æˆå¤§æ•°
+	BigNum(const char*);		//å°†ä¸€ä¸ªå­—ç¬¦ä¸²ç±»å‹çš„å˜é‡è½¬åŒ–ä¸ºå¤§æ•°
+	BigNum(const BigNum &); //æ‹·è´æ„é€ å‡½æ•°
+    BigNum &operator=(const BigNum &);               //é‡è½½èµ‹å€¼è¿ç®—ç¬¦ï¼Œå¤§æ•°ä¹‹é—´è¿›è¡Œèµ‹å€¼è¿ç®—
+    friend istream &operator>>(istream &, BigNum &); //é‡è½½è¾“å…¥è¿ç®—ç¬¦
+    friend ostream &operator<<(ostream &, BigNum &); //é‡è½½è¾“å‡ºè¿ç®—ç¬¦
 
-    BigNum operator+(const BigNum &) const; //ÖØÔØ¼Ó·¨ÔËËã·û£¬Á½¸ö´óÊıÖ®¼äµÄÏà¼ÓÔËËã
-	BigNum operator-(const BigNum &)const; //ÖØÔØ¼õ·¨ÔËËã·û£¬Á½¸ö´óÊıÖ®¼äµÄÏà¼õÔËËã
-	BigNum operator*(const BigNum &)const; //ÖØÔØ³Ë·¨ÔËËã·û£¬Á½¸ö´óÊıÖ®¼äµÄÏà³ËÔËËã
-	BigNum operator/(const int &)const;    //ÖØÔØ³ı·¨ÔËËã·û£¬´óÊı¶ÔÒ»¸öÕûÊı½øĞĞÏà³ıÔËËã 
-    BigNum operator^(const int &) const; //´óÊıµÄn´Î·½ÔËËã
-    int operator%(const int &) const;           //´óÊı¶ÔÒ»¸öintÀàĞÍµÄ±äÁ¿½øĞĞÈ¡Ä£ÔËËã
-    bool operator>(const BigNum &T) const;      //´óÊıºÍÁíÒ»¸ö´óÊıµÄ´óĞ¡±È½Ï
-    bool operator>(const int &t) const;         //´óÊıºÍÒ»¸öintÀàĞÍµÄ±äÁ¿µÄ´óĞ¡±È½Ï
+    BigNum operator+(const BigNum &) const; //é‡è½½åŠ æ³•è¿ç®—ç¬¦ï¼Œä¸¤ä¸ªå¤§æ•°ä¹‹é—´çš„ç›¸åŠ è¿ç®—
+	BigNum operator-(const BigNum &)const; //é‡è½½å‡æ³•è¿ç®—ç¬¦ï¼Œä¸¤ä¸ªå¤§æ•°ä¹‹é—´çš„ç›¸å‡è¿ç®—
+	BigNum operator*(const BigNum &)const; //é‡è½½ä¹˜æ³•è¿ç®—ç¬¦ï¼Œä¸¤ä¸ªå¤§æ•°ä¹‹é—´çš„ç›¸ä¹˜è¿ç®—
+	BigNum operator/(const int &)const;    //é‡è½½é™¤æ³•è¿ç®—ç¬¦ï¼Œå¤§æ•°å¯¹ä¸€ä¸ªæ•´æ•°è¿›è¡Œç›¸é™¤è¿ç®— 
+    BigNum operator^(const int &) const; //å¤§æ•°çš„næ¬¡æ–¹è¿ç®—
+    int operator%(const int &) const;           //å¤§æ•°å¯¹ä¸€ä¸ªintç±»å‹çš„å˜é‡è¿›è¡Œå–æ¨¡è¿ç®—
+    bool operator>(const BigNum &T) const;      //å¤§æ•°å’Œå¦ä¸€ä¸ªå¤§æ•°çš„å¤§å°æ¯”è¾ƒ
+    bool operator>(const int &t) const;         //å¤§æ•°å’Œä¸€ä¸ªintç±»å‹çš„å˜é‡çš„å¤§å°æ¯”è¾ƒ
 
-    void print(); //Êä³ö´óÊı
+    void print(); //è¾“å‡ºå¤§æ•°
 };
-BigNum::BigNum(const int b) //½«Ò»¸öintÀàĞÍµÄ±äÁ¿×ª»¯Îª´óÊı
+BigNum::BigNum(const int b) //å°†ä¸€ä¸ªintç±»å‹çš„å˜é‡è½¬åŒ–ä¸ºå¤§æ•°
 {
     int c, d = b;
     len = 0;
@@ -59,7 +59,7 @@ BigNum::BigNum(const int b) //½«Ò»¸öintÀàĞÍµÄ±äÁ¿×ª»¯Îª´óÊı
     }
     a[len++] = d;
 }
-BigNum::BigNum(const char *s) //½«Ò»¸ö×Ö·û´®ÀàĞÍµÄ±äÁ¿×ª»¯Îª´óÊı
+BigNum::BigNum(const char *s) //å°†ä¸€ä¸ªå­—ç¬¦ä¸²ç±»å‹çš„å˜é‡è½¬åŒ–ä¸ºå¤§æ•°
 {
     int t, k, index, L, i;
     memset(a, 0, sizeof(a));
@@ -79,14 +79,14 @@ BigNum::BigNum(const char *s) //½«Ò»¸ö×Ö·û´®ÀàĞÍµÄ±äÁ¿×ª»¯Îª´óÊı
         a[index++] = t;
     }
 }
-BigNum::BigNum(const BigNum &T) : len(T.len) //¿½±´¹¹Ôìº¯Êı
+BigNum::BigNum(const BigNum &T) : len(T.len) //æ‹·è´æ„é€ å‡½æ•°
 {
     int i;
     memset(a, 0, sizeof(a));
     for (i = 0; i < len; i++)
         a[i] = T.a[i];
 }
-BigNum &BigNum::operator=(const BigNum &n) //ÖØÔØ¸³ÖµÔËËã·û£¬´óÊıÖ®¼ä¸³ÖµÔËËã
+BigNum &BigNum::operator=(const BigNum &n) //é‡è½½èµ‹å€¼è¿ç®—ç¬¦ï¼Œå¤§æ•°ä¹‹é—´èµ‹å€¼è¿ç®—
 {
     int i;
     len = n.len;
@@ -116,7 +116,7 @@ istream &operator>>(istream &in, BigNum &b)
     b.len = count++;
     return in;
 }
-ostream &operator<<(ostream &out, BigNum &b) //ÖØÔØÊä³öÔËËã·û
+ostream &operator<<(ostream &out, BigNum &b) //é‡è½½è¾“å‡ºè¿ç®—ç¬¦
 {
     int i;
     cout << b.a[b.len - 1];
@@ -126,7 +126,7 @@ ostream &operator<<(ostream &out, BigNum &b) //ÖØÔØÊä³öÔËËã·û
     }
     return out;
 }
-BigNum BigNum::operator+(const BigNum &T) const //Á½¸ö´óÊıÖ®¼äµÄÏà¼ÓÔËËã
+BigNum BigNum::operator+(const BigNum &T) const //ä¸¤ä¸ªå¤§æ•°ä¹‹é—´çš„ç›¸åŠ è¿ç®—
 {
     BigNum t(*this);
     int i, big;
@@ -146,7 +146,7 @@ BigNum BigNum::operator+(const BigNum &T) const //Á½¸ö´óÊıÖ®¼äµÄÏà¼ÓÔËËã
         t.len = big;
     return t;
 }
-BigNum BigNum::operator-(const BigNum &T) const //Á½¸ö´óÊıÖ®¼äµÄÏà¼õÔËËã
+BigNum BigNum::operator-(const BigNum &T) const //ä¸¤ä¸ªå¤§æ•°ä¹‹é—´çš„ç›¸å‡è¿ç®—
 {
     int i, j, big;
     bool flag;
@@ -189,7 +189,7 @@ BigNum BigNum::operator-(const BigNum &T) const //Á½¸ö´óÊıÖ®¼äµÄÏà¼õÔËËã
         t1.a[big - 1] = 0 - t1.a[big - 1];
     return t1;
 }
-BigNum BigNum::operator*(const BigNum &T) const //Á½¸ö´óÊıÖ®¼äµÄÏà³Ë
+BigNum BigNum::operator*(const BigNum &T) const //ä¸¤ä¸ªå¤§æ•°ä¹‹é—´çš„ç›¸ä¹˜
 {
     BigNum ret;
     int i, j, up;
@@ -219,7 +219,7 @@ BigNum BigNum::operator*(const BigNum &T) const //Á½¸ö´óÊıÖ®¼äµÄÏà³Ë
           while (ret.a[ret.len - 1] == 0 && ret.len > 1) ret.len--;
     return ret;
 }
-BigNum BigNum::operator/(const int &b) const //´óÊı¶ÔÒ»¸öÕûÊı½øĞĞÏà³ıÔËËã
+BigNum BigNum::operator/(const int &b) const //å¤§æ•°å¯¹ä¸€ä¸ªæ•´æ•°è¿›è¡Œç›¸é™¤è¿ç®—
 {
     BigNum ret;
     int i, down = 0;
@@ -233,14 +233,14 @@ BigNum BigNum::operator/(const int &b) const //´óÊı¶ÔÒ»¸öÕûÊı½øĞĞÏà³ıÔËËã
         ret.len--;
     return ret;
 }
-int BigNum::operator%(const int &b) const //´óÊı¶ÔÒ»¸ö intÀàĞÍµÄ±äÁ¿½øĞĞÈ¡Ä£
+int BigNum::operator%(const int &b) const //å¤§æ•°å¯¹ä¸€ä¸ª intç±»å‹çš„å˜é‡è¿›è¡Œå–æ¨¡
 {
     int i, d = 0;
     for (i = len - 1; i >= 0; i--)
         d = ((d * (MAXN + 1)) % b + a[i]) % b;
     return d;
 }
-BigNum BigNum::operator^(const int &n) const //´óÊıµÄn´Î·½ÔËËã
+BigNum BigNum::operator^(const int &n) const //å¤§æ•°çš„næ¬¡æ–¹è¿ç®—
 {
     BigNum t, ret(1);
     int i;
@@ -263,7 +263,7 @@ BigNum BigNum::operator^(const int &n) const //´óÊıµÄn´Î·½ÔËËã
     }
     return ret;
 }
-bool BigNum::operator>(const BigNum &T) const //´óÊıºÍÁíÒ»¸ö´óÊıµÄ´óĞ¡±È½Ï
+bool BigNum::operator>(const BigNum &T) const //å¤§æ•°å’Œå¦ä¸€ä¸ªå¤§æ•°çš„å¤§å°æ¯”è¾ƒ
 {
     int ln;
     if (len > T.len)
@@ -281,12 +281,12 @@ bool BigNum::operator>(const BigNum &T) const //´óÊıºÍÁíÒ»¸ö´óÊıµÄ´óĞ¡±È½Ï
     else
         return false;
 }
-bool BigNum::operator>(const int &t) const //´óÊıºÍÒ»¸öintÀàĞÍµÄ±äÁ¿µÄ´óĞ¡±È½Ï
+bool BigNum::operator>(const int &t) const //å¤§æ•°å’Œä¸€ä¸ªintç±»å‹çš„å˜é‡çš„å¤§å°æ¯”è¾ƒ
 {
     BigNum b(t);
     return *this > b;
 }
-void BigNum::print() //Êä³ö´óÊı
+void BigNum::print() //è¾“å‡ºå¤§æ•°
 {
     int i;
     printf("%d", a[len - 1]);
@@ -294,13 +294,13 @@ void BigNum::print() //Êä³ö´óÊı
         printf("%04d", a[i]);
     printf("\n");
 }
-BigNum f[110]; //¿¨ÌØÀ¼Êı
+BigNum f[110]; //å¡ç‰¹å…°æ•°
 
 int main()
 {
     f[0] = 1;
     for (int i = 1; i <= 100; i++)
-        f[i] = f[i - 1] * (4 * i - 2) / (i + 1); //¿¨ÌØÀ¼ÊıµİÍÆÊ½
+        f[i] = f[i - 1] * (4 * i - 2) / (i + 1); //å¡ç‰¹å…°æ•°é€’æ¨å¼
     int n;
     while (scanf("%d", &n) == 1)
     {
