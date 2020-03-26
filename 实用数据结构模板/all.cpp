@@ -1,193 +1,365 @@
 #include <cstdio>
 #include <string>
-#include<iostream>
+#include <iostream>
 #include <algorithm>
 using namespace std;
 // vector allocate mem : if capt fact < 0.5 or not enough : resize()
 // provide ADT : push_back(T data)  empty() T * begin() T* end()
 // T* lower_bound(T*begin , T* end ,T dt) T* lower_bound(T*begin , T* end ,T dt,void * comp)
 // T* upper_bound() T* find() void clear()
-template <typename T> class vector{
-    private:
-        T * _elem;
-        T * _now;
-        unsigned int INIT_SIZE = 100;
-        unsigned int _size = 0;
-        unsigned int _capacity = 100;
-        void resize(){
-            if( _size > _capacity ){
-                _capacity = _capacity<<1;
-                T * temp = new T [_capacity+1];
-                for(int i = 0; i < _size; i++){
-                    temp[i] = _elem[i];
-                }
-                delete []_elem;
-                _elem = temp;
-                if(_size >= 1)
-                    _now = _elem + (_size - 1);
-                else{
-                    _now = _elem;
-                }
+template <typename T>
+class vector
+{
+private:
+    T *_elem;
+    T *_now;
+    unsigned int INIT_SIZE = 100;
+    unsigned int _size = 0;
+    unsigned int _capacity = 100;
+    void resize()
+    {
+        if (_size > _capacity)
+        {
+            _capacity = _capacity << 1;
+            T *temp = new T[_capacity + 1];
+            for (int i = 0; i < _size; i++)
+            {
+                temp[i] = _elem[i];
             }
-            else if( _size < (_capacity>>1)){
-                _capacity = _capacity>>1;
-                T * temp = new T [_capacity+1];
-                for(int i = 0; i < _size; i++){
-                    temp[i] = _elem[i];
-                }
-                delete []_elem;
-                _elem = temp;
-                if(_size >= 1)
-                    _now = _elem + (_size - 1);
-                else{
-                    _now = _elem;
-                }
+            delete[] _elem;
+            _elem = temp;
+            if (_size >= 1)
+                _now = _elem + (_size - 1);
+            else
+            {
+                _now = _elem;
             }
         }
-    public:
-        vector(){
-            _elem = new T [INIT_SIZE];
-            _size = 0;
-            _capacity = INIT_SIZE;
-            _now = _elem;
+        else if (_size < (_capacity >> 1))
+        {
+            _capacity = _capacity >> 1;
+            T *temp = new T[_capacity + 1];
+            for (int i = 0; i < _size; i++)
+            {
+                temp[i] = _elem[i];
+            }
+            delete[] _elem;
+            _elem = temp;
+            if (_size >= 1)
+                _now = _elem + (_size - 1);
+            else
+            {
+                _now = _elem;
+            }
         }
-        void push_back(T data){
-            resize();
-            _elem[_size] = data;
-            _size++;
-            _now = _now + 1;
-        }
-        bool empty(){
-            return _size == 0;
-        }
-        T * begin(){
-            return _elem;
-        }
-        T* end(){
-            return _elem + _size ;
-        }
-        T* lower_bound(T*begin , T* end ,T dt){
-            return nullptr;
-        } 
-        T* lower_bound(T*begin , T* end ,T dt,void * comp){
-            return nullptr;
-        }
-        T* upper_bound(){
-            return nullptr;
-        }
-        T* find(){
-            return nullptr;
-        }
-        void clear(){
+    }
 
-        }
+public:
+    vector()
+    {
+        _elem = new T[INIT_SIZE];
+        _size = 0;
+        _capacity = INIT_SIZE;
+        _now = _elem;
+    }
+    void push_back(T data)
+    {
+        resize();
+        _elem[_size] = data;
+        _size++;
+        _now = _now + 1;
+    }
+    bool empty()
+    {
+        return _size == 0;
+    }
+    T *begin()
+    {
+        return _elem;
+    }
+    T *end()
+    {
+        return _elem + _size;
+    }
+    T *lower_bound(T *begin, T *end, T dt)
+    {
+        return nullptr;
+    }
+    T *lower_bound(T *begin, T *end, T dt, void *comp)
+    {
+        return nullptr;
+    }
+    T *upper_bound()
+    {
+        return nullptr;
+    }
+    T *find()
+    {
+        return nullptr;
+    }
+    void clear()
+    {
+    }
 };
 
 //  single dirction node
-template <typename T> class node{
-    public:
-        T data;
-        node * next;
-    node(){
+template <typename T>
+class node
+{
+public:
+    T data;
+    node<T> *next;
+    node<T> *prev;
+    node()
+    {
         next = nullptr;
+        prev = nullptr;
         data = NULL;
     }
-    node(T dt,node * nxt){
+    node(node<T> *pra, node<T> *nxt, T dt)
+    {
         data = dt;
         next = nxt;
+        prev = pra;
+        pra->next = this;
+        nxt->prev = this;
     }
-    node(T dt){
+    node(T dt)
+    {
         data = dt;
         next = nullptr;
+        prev = nullptr;
     }
 };
 
 //on List ,I found in cppreference the operate of list provide can't meet the
 // need on practice ,so I reconstrut the ADT .
-template <typename T> class list:public node<T> {
-    private:
-        unsigned int _size = 0;
-        node<T> *head;
-        node<T> *tail; 
-    public:
-    list(){
-        head = new  node<T>();
-        tail = head;
+template <typename T>
+class list : public node<T>
+{
+private:
+    unsigned int _size = 0;
+    node<T> *head;
+    node<T> *tail;
+
+public:
+    list()
+    {
+        head = new node<T>();
+        tail = new node<T>();
+        head->next = tail;
+        tail->prev = head;
     }
-    bool empty(){
-        return (size == 0 );
+    bool empty()
+    {
+        return (size == 0);
     }
-    void insert(T data){
-        node<T> *p = new node<T>(data);
-        if(p == nullptr){
-            //std::cout<<"mem not enough! please try again"<<endl;
-            return ;
-        }
-        tail->next = p; 
-        tail = p;
+    void push_back(T data)
+    {
+        node<T> *p = new node<T>(tail->prev, tail, data);
         _size++;
     }
-    void push_back(){
-
+    void push_front(T data)
+    {
+        new node<T>(head, head->next, data);
+        _size++;
     }
-    void push_front(){
-
+    void pop_back()
+    {
+        node<T> *p = tail->prev, *q;
+        q = p->prev;
+        q->next = tail;
+        tail->prev = q;
+        delete p;
+        _size--;
     }
-    void clear(){
-
+    void pop_front()
+    {
+        node<T> *p = head->next, *q;
+        q = p->next;
+        head->next = q;
+        q->prev = head;
+        delete p;
+        _size--;
     }
-    
-    void remove(){
-
+    void clear()
+    {
+        node<T> *p = tail->prev, *q;
+        while (p != head)
+        {
+            q = p->prev;
+            q->next = tail;
+            tail->prev = q;
+            delete p;
+            p = q;
+        }
+        _size = 0;
     }
-    unsigned int size(){
+    node<T> *find_first(T data)
+    {
+        node<T> *p = head->next;
+        while (p != tail)
+        {
+            if (p->data == data)
+            {
+                return p;
+            }
+            else
+            {
+                p = p->next;
+            }
+        }
+        return nullptr;
+    }
+    int remove(unsigned int num)
+    {
+        unsigned int i = 0;
+        node<T> *p = head, *before, *after;
+        while (i <= num)
+        {
+            if (p != tail)
+            {
+                p = p->next;
+                i++;
+            }
+            else
+                return -1;
+        }
+        before = p->prev;
+        after = p->next;
+        after->prev = before;
+        before->next = after;
+        delete p;
+        _size--;
+        return 0;
+    }
+    void print_list_inorder()
+    {
+        node<T> *p = head->next;
+        std::cout << "the elem of list :";
+        while (p != tail)
+        {
+            cout << p->data << " ";
+            p = p->next;
+        }
+        std::cout << endl;
+    }
+    unsigned int size()
+    {
         return _size;
     }
-    void reverse(){
-
+    void reverse()
+    {
     }
-    void merge(){
-
+    void merge()
+    {
     }
-    node<T> * back(){
+    T back()
+    {
+        return tail->prev->data;
+    }
+    T front()
+    {
+        return head->next->data;
+    }
+    node<T> *end()
+    {
         return tail;
     }
-    node<T> * front(){
-        return head->next;
-    }
-    
 };
-template <typename T> class stack:public list<T>{
-    private:
-    public:
-    void pop(){
 
+//stack :
+template <typename T>
+class stack : private list<T>
+{
+private:
+    list<T> s;
+
+public:
+    void pop()
+    {
+        s.pop_front();
     }
-    T top(){
-
+    T top()
+    {
+        s.front();
     }
-    void push(){
-
+    void push(T data)
+    {
+        s.push_front(data);
+    }
+    bool empty()
+    {
+        return s.empty();
+    }
+    unsigned int size()
+    {
+        return s.size();
     }
 };
-template <typename T> class queue:public list<T>{
-    private:
-    public:
-    T front(){
 
+//queue :
+template <typename T>
+class queue : private list<T>
+{
+private:
+    list<T> s;
+
+public:
+    T front()
+    {
+        s.front();
     }
-    T push(){
-
+    void push(T data)
+    {
+        s.push_back(data);
     }
-    T pop(){
-
+    void pop()
+    {
+        s.pop_front();
+    }
+    bool empty()
+    {
+        return s.empty();
+    }
+    unsigned int size()
+    {
+        return s.size();
     }
 };
 int main()
 {
     list<int> l;
-    l.insert(5);
-    cout<<l.front()->data<<endl;
+    l.push_back(5);
+    l.push_front(8);
+    l.push_back(4);
+    l.push_back(3);
+    l.push_back(2);
+    l.push_back(1);
+    l.print_list_inorder();
+    cout << "back is:" << l.back() << endl;
+    cout << "front is:" << l.front() << endl;
+    cout << " size :" << l.size() << endl;
+    l.pop_front();
+    l.print_list_inorder();
+    cout << "back is:" << l.back() << endl;
+    cout << "front is:" << l.front() << endl;
+    cout << " size :" << l.size() << endl;
+    l.pop_back();
+    l.print_list_inorder();
+    cout << "back is:" << l.back() << endl;
+    cout << "front is:" << l.front() << endl;
+    cout << " size :" << l.size() << endl;
+    l.remove(1);
+    l.print_list_inorder();
+    cout << " size :" << l.size() << endl;
+    l.clear();
+    l.print_list_inorder();
+    cout << " size :" << l.size() << endl;
+
+    stack<int> s;
+    s.push(1);
+    cout << s.top();
     system("pause");
     return 0;
 }

@@ -1,13 +1,29 @@
-template <typename T> class queue:public list<T>{
-    private:
-    public:
-    T front(){
+//queue :
+template <typename T>
+class queue : private list<T>
+{
+private:
+    list<T> s;
 
+public:
+    T front()
+    {
+        s.front();
     }
-    T push(){
-
+    void push(T data)
+    {
+        s.push_back(data);
     }
-    T pop(){
-
+    void pop()
+    {
+        s.pop_front();
+    }
+    bool empty()
+    {
+        return s.empty();
+    }
+    unsigned int size()
+    {
+        return s.size();
     }
 };
