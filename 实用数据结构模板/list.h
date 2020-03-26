@@ -18,7 +18,7 @@ public:
     }
     bool empty()
     {
-        return (size == 0);
+        return (_size == 0);
     }
     void push_back(T data)
     {
