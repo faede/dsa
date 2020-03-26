@@ -1,0 +1,72 @@
+template <typename T> class vector{
+    private:
+        T * _elem;
+        T * _now;
+        unsigned int INIT_SIZE = 100;
+        unsigned int _size = 0;
+        unsigned int _capacity = 100;
+        void resize(){
+            if( _size > _capacity ){
+                _capacity = _capacity<<1;
+                T * temp = new T [_capacity+1];
+                for(int i = 0; i < size; i++){
+                    temp[i] = _elem[i];
+                }
+                delete _elem[];
+                _elem = temp;
+                if(size >= 1)
+                    _now = _elem + (_size - 1);
+                else{
+                    _now = _elem;
+                }
+            }
+            else if( _size < (_capacity>>1)){
+                _capacity = _capacity>>1;
+                T * temp = new T [_capacity+1];
+                for(int i = 0; i < size; i++){
+                    temp[i] = _elem[i];
+                }
+                delete _elem[];
+                _elem = temp;
+                if(size >= 1)
+                    _now = _elem + (_size - 1);
+                else{
+                    _now = _elem;
+                }
+            }
+        }
+    public:
+        vector(){
+            _elem = new T [INIT_SIZE];
+            _size = 0;
+            _capacity = INIT_SIZE;
+            _now = _elem;
+        }
+        void push_back(T data){
+            resize();
+            _elem[_size] = data;
+            _size++;
+            _now = _now + 1;
+        }
+        bool empty(){
+            return _size == 0;
+        }
+        T * begin(){
+            return _elem;
+        }
+        T* end(){
+            return _elem + size ;
+        }
+        T* lower_bound(T*begin , T* end ,T dt){
+            return nullptr;
+        } 
+        T* lower_bound(T*begin , T* end ,T dt,void * comp){
+            return nullptr;
+        }
+        T* upper_bound(){
+            return nullptr;
+        }
+        T* find(){
+            return nullptr;
+        }
+};
