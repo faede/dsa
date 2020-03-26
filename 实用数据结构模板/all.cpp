@@ -3,6 +3,10 @@
 #include<iostream>
 #include <algorithm>
 using namespace std;
+// vector allocate mem : if capt fact < 0.5 or not enough : resize()
+// provide ADT : push_back(T data)  empty() T * begin() T* end()
+// T* lower_bound(T*begin , T* end ,T dt) T* lower_bound(T*begin , T* end ,T dt,void * comp)
+// T* upper_bound() T* find() void clear()
 template <typename T> class vector{
     private:
         T * _elem;
@@ -14,12 +18,12 @@ template <typename T> class vector{
             if( _size > _capacity ){
                 _capacity = _capacity<<1;
                 T * temp = new T [_capacity+1];
-                for(int i = 0; i < size; i++){
+                for(int i = 0; i < _size; i++){
                     temp[i] = _elem[i];
                 }
-                delete _elem[];
+                delete []_elem;
                 _elem = temp;
-                if(size >= 1)
+                if(_size >= 1)
                     _now = _elem + (_size - 1);
                 else{
                     _now = _elem;
@@ -28,12 +32,12 @@ template <typename T> class vector{
             else if( _size < (_capacity>>1)){
                 _capacity = _capacity>>1;
                 T * temp = new T [_capacity+1];
-                for(int i = 0; i < size; i++){
+                for(int i = 0; i < _size; i++){
                     temp[i] = _elem[i];
                 }
-                delete _elem[];
+                delete []_elem;
                 _elem = temp;
-                if(size >= 1)
+                if(_size >= 1)
                     _now = _elem + (_size - 1);
                 else{
                     _now = _elem;
@@ -60,7 +64,7 @@ template <typename T> class vector{
             return _elem;
         }
         T* end(){
-            return _elem + size ;
+            return _elem + _size ;
         }
         T* lower_bound(T*begin , T* end ,T dt){
             return nullptr;
@@ -74,7 +78,12 @@ template <typename T> class vector{
         T* find(){
             return nullptr;
         }
+        void clear(){
+
+        }
 };
+
+//  single dirction node
 template <typename T> class node{
     public:
         T data;
@@ -92,6 +101,9 @@ template <typename T> class node{
         next = nullptr;
     }
 };
+
+//on List ,I found in cppreference the operate of list provide can't meet the
+// need on practice ,so I reconstrut the ADT .
 template <typename T> class list:public node<T> {
     private:
         unsigned int _size = 0;
@@ -115,35 +127,67 @@ template <typename T> class list:public node<T> {
         tail = p;
         _size++;
     }
+    void push_back(){
+
+    }
+    void push_front(){
+
+    }
+    void clear(){
+
+    }
+    
     void remove(){
 
     }
     unsigned int size(){
         return _size;
     }
-    node<T> * end(){
+    void reverse(){
+
+    }
+    void merge(){
+
+    }
+    node<T> * back(){
         return tail;
     }
     node<T> * front(){
         return head->next;
     }
+    
 };
-template <typename T> class stack{
+template <typename T> class stack:public list<T>{
     private:
-        
+    public:
+    void pop(){
 
+    }
+    T top(){
+
+    }
+    void push(){
+
+    }
 };
-template <typename T> class queue{
+template <typename T> class queue:public list<T>{
     private:
-        
+    public:
+    T front(){
 
+    }
+    T push(){
+
+    }
+    T pop(){
+
+    }
 };
 int main()
 {
-    
     list<int> l;
     l.insert(5);
-    cout<<l.size()<<endl;
+    cout<<l.front()->data<<endl;
     system("pause");
     return 0;
 }

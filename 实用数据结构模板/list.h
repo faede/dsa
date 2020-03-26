@@ -1,3 +1,5 @@
+//on List ,I found in cppreference the operate of list provide can't meet the
+// need on practice ,so I reconstrut the ADT .
 template <typename T> class list:public node<T> {
     private:
         unsigned int _size = 0;
@@ -21,16 +23,33 @@ template <typename T> class list:public node<T> {
         tail = p;
         _size++;
     }
+    void push_back(){
+
+    }
+    void push_front(){
+
+    }
+    void clear(){
+
+    }
+    
     void remove(){
 
     }
     unsigned int size(){
         return _size;
     }
-    node<T> * end(){
+    void reverse(){
+
+    }
+    void merge(){
+
+    }
+    node<T> * back(){
         return tail;
     }
     node<T> * front(){
         return head->next;
     }
+    
 };

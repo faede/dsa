@@ -1,3 +1,7 @@
+// vector allocate mem : if capt fact < 0.5 or not enough : resize()
+// provide ADT : push_back(T data)  empty() T * begin() T* end()
+// T* lower_bound(T*begin , T* end ,T dt) T* lower_bound(T*begin , T* end ,T dt,void * comp)
+// T* upper_bound() T* find() void clear()
 template <typename T> class vector{
     private:
         T * _elem;
@@ -9,12 +13,12 @@ template <typename T> class vector{
             if( _size > _capacity ){
                 _capacity = _capacity<<1;
                 T * temp = new T [_capacity+1];
-                for(int i = 0; i < size; i++){
+                for(int i = 0; i < _size; i++){
                     temp[i] = _elem[i];
                 }
-                delete _elem[];
+                delete []_elem;
                 _elem = temp;
-                if(size >= 1)
+                if(_size >= 1)
                     _now = _elem + (_size - 1);
                 else{
                     _now = _elem;
@@ -23,12 +27,12 @@ template <typename T> class vector{
             else if( _size < (_capacity>>1)){
                 _capacity = _capacity>>1;
                 T * temp = new T [_capacity+1];
-                for(int i = 0; i < size; i++){
+                for(int i = 0; i < _size; i++){
                     temp[i] = _elem[i];
                 }
-                delete _elem[];
+                delete []_elem;
                 _elem = temp;
-                if(size >= 1)
+                if(_size >= 1)
                     _now = _elem + (_size - 1);
                 else{
                     _now = _elem;
@@ -55,7 +59,7 @@ template <typename T> class vector{
             return _elem;
         }
         T* end(){
-            return _elem + size ;
+            return _elem + _size ;
         }
         T* lower_bound(T*begin , T* end ,T dt){
             return nullptr;
@@ -68,5 +72,8 @@ template <typename T> class vector{
         }
         T* find(){
             return nullptr;
+        }
+        void clear(){
+
         }
 };
