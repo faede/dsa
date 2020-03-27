@@ -9,6 +9,7 @@ private:
     node<T> *tail;
 
 public:
+    ~list() { clear(); };
     list()
     {
         head = new node<T>();
@@ -22,7 +23,7 @@ public:
     }
     void push_back(T data)
     {
-        node<T> *p = new node<T>(tail->prev, tail, data);
+        new node<T>(tail->prev, tail, data);
         _size++;
     }
     void push_front(T data)
@@ -41,10 +42,14 @@ public:
     }
     void pop_front()
     {
+        /*if(size()==0){//或许是这里出现了问题
+            return ;
+        }*/
         node<T> *p = head->next, *q;
         q = p->next;
         head->next = q;
-        q->prev = head;
+        if (q != NULL)
+            q->prev = head;
         delete p;
         _size--;
     }
@@ -75,7 +80,7 @@ public:
                 p = p->next;
             }
         }
-        return nullptr;
+        return NULL;
     }
     int remove(unsigned int num)
     {

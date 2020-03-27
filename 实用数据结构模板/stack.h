@@ -6,13 +6,14 @@ private:
     list<T> s;
 
 public:
+    ~stack(){};
     void pop()
     {
         s.pop_front();
     }
     T top()
     {
-        s.front();
+        return s.front();
     }
     void push(T data)
     {

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
+/**************         单独实现了数据结构模板 所以直接套用。 剩余部分待完善     *******************************/
 // vector allocate mem : if capt fact < 0.5 or not enough : resize()
 // provide ADT : push_back(T data)  empty() T * begin() T* end()
 // T* lower_bound(T*begin , T* end ,T dt) T* lower_bound(T*begin , T* end ,T dt,void * comp)
@@ -55,6 +56,7 @@ private:
     }
 
 public:
+    ~vector() { delete[] _elem; };
     vector()
     {
         _elem = new T[INIT_SIZE];
@@ -83,37 +85,38 @@ public:
     }
     T *lower_bound(T *begin, T *end, T dt)
     {
-        return nullptr;
+        return NULL;
     }
     T *lower_bound(T *begin, T *end, T dt, void *comp)
     {
-        return nullptr;
+        return NULL;
     }
     T *upper_bound()
     {
-        return nullptr;
+        return NULL;
     }
     T *find()
     {
-        return nullptr;
+        return NULL;
     }
     void clear()
     {
     }
 };
 
-//  single dirction node
+//  double dirction node
 template <typename T>
 class node
 {
 public:
+    ~node(){};
     T data;
     node<T> *next;
     node<T> *prev;
     node()
     {
-        next = nullptr;
-        prev = nullptr;
+        next = NULL;
+        prev = NULL;
         data = NULL;
     }
     node(node<T> *pra, node<T> *nxt, T dt)
@@ -127,8 +130,8 @@ public:
     node(T dt)
     {
         data = dt;
-        next = nullptr;
-        prev = nullptr;
+        next = NULL;
+        prev = NULL;
     }
 };
 
@@ -143,6 +146,7 @@ private:
     node<T> *tail;
 
 public:
+    ~list() { clear(); };
     list()
     {
         head = new node<T>();
@@ -152,11 +156,11 @@ public:
     }
     bool empty()
     {
-        return (size == 0);
+        return (_size == 0);
     }
     void push_back(T data)
     {
-        node<T> *p = new node<T>(tail->prev, tail, data);
+        new node<T>(tail->prev, tail, data);
         _size++;
     }
     void push_front(T data)
@@ -175,10 +179,14 @@ public:
     }
     void pop_front()
     {
+        /*if(size()==0){//或许是这里出现了问题
+            return ;
+        }*/
         node<T> *p = head->next, *q;
         q = p->next;
         head->next = q;
-        q->prev = head;
+        if (q != NULL)
+            q->prev = head;
         delete p;
         _size--;
     }
@@ -209,7 +217,7 @@ public:
                 p = p->next;
             }
         }
-        return nullptr;
+        return NULL;
     }
     int remove(unsigned int num)
     {
@@ -276,13 +284,14 @@ private:
     list<T> s;
 
 public:
+    ~stack(){};
     void pop()
     {
         s.pop_front();
     }
     T top()
     {
-        s.front();
+        return s.front();
     }
     void push(T data)
     {
@@ -306,9 +315,10 @@ private:
     list<T> s;
 
 public:
+    ~queue(){};
     T front()
     {
-        s.front();
+        return s.front();
     }
     void push(T data)
     {
@@ -329,37 +339,7 @@ public:
 };
 int main()
 {
-    list<int> l;
-    l.push_back(5);
-    l.push_front(8);
-    l.push_back(4);
-    l.push_back(3);
-    l.push_back(2);
-    l.push_back(1);
-    l.print_list_inorder();
-    cout << "back is:" << l.back() << endl;
-    cout << "front is:" << l.front() << endl;
-    cout << " size :" << l.size() << endl;
-    l.pop_front();
-    l.print_list_inorder();
-    cout << "back is:" << l.back() << endl;
-    cout << "front is:" << l.front() << endl;
-    cout << " size :" << l.size() << endl;
-    l.pop_back();
-    l.print_list_inorder();
-    cout << "back is:" << l.back() << endl;
-    cout << "front is:" << l.front() << endl;
-    cout << " size :" << l.size() << endl;
-    l.remove(1);
-    l.print_list_inorder();
-    cout << " size :" << l.size() << endl;
-    l.clear();
-    l.print_list_inorder();
-    cout << " size :" << l.size() << endl;
-
-    stack<int> s;
-    s.push(1);
-    cout << s.top();
+    
     system("pause");
     return 0;
 }

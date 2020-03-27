@@ -6,9 +6,10 @@ private:
     list<T> s;
 
 public:
+    ~queue(){};
     T front()
     {
-        s.front();
+        return s.front();
     }
     void push(T data)
     {
