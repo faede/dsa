@@ -11,7 +11,7 @@ public:
     {
         next = NULL;
         prev = NULL;
-        data = NULL;
+        data = T();
     }
     node(node<T> *pra, node<T> *nxt, T dt)
     {

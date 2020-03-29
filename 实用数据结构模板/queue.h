@@ -23,7 +23,7 @@ public:
     {
         return s.empty();
     }
-    unsigned int size()
+    unsigned long long size()
     {
         return s.size();
     }

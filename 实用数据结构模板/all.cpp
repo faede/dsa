@@ -1,29 +1,134 @@
 #include <cstdio>
 #include <string>
 #include <iostream>
-#include <algorithm>
 using namespace std;
-/**************         单独实现了数据结构模板 所以直接套用。 剩余部分待完善     *******************************/
+/**************         单独实现了数据结构, STL模板  所以直接套用。 剩余部分待完善     *******************************/
+//upper_bound() upper_bound() sort()
+
+/**
+ *  @brief sort a equence using a predicate for comparison.
+ *  @param begin    An iterator.
+ *  @param end      Another iterator.
+ *  @param comp     A comparison functor.
+ *  @param fuction  The mothod of sort.
+ *  @return         Nothing.
+ *  Rearranges the elements in the range @p [begin,end)
+*/
+template <typename T>
+void merge_sort()
+{
+}
+template <typename T>
+void quick_sort(T *begin, T *end)
+{
+}
+template <typename T>
+void sort(T *begin, T *end)
+{
+    quick_sort(begin, end);
+}
+template <typename T,typename G>
+void sort(T *begin, T *end, G comp  ,void * fuction)
+{
+    
+}
+template <typename T,typename G>
+void sort(T *begin, T *end, G comp  )
+{
+}
+template <typename T>
+T *lower_bound(T *be, T *ed, T dt)
+{
+    unsigned long long mid, left = 0, right = ed - be ;
+    while (left < right)
+    {
+        mid = left + (right - left) / 2;
+        if (*(be + mid) < dt)
+        {
+            left = mid + 1;
+        }
+        else
+        {
+            right = mid;
+        }
+    }
+    return be + left;
+}
+template <typename T,typename G>
+T *lower_bound(T *be, T *ed, T dt, G comp )
+{
+    unsigned long long mid, left = 0, right = ed - be ;
+    while (left < right)
+    {
+        mid = left + (right - left) / 2;
+        if (comp(*(be + mid), dt))
+        {
+            left = mid + 1;
+        }
+        else
+        {
+            right = mid;
+        }
+    }
+    return be + left;
+}
+template <typename T>
+T * upper_bound(T *be, T *ed, T dt)
+{
+    unsigned long long mid, left = 0, right = ed - be ;
+    while (left < right)
+    {
+        mid = left + (right - left) / 2;
+        if (*(be + mid) <= dt)
+        {
+            left = mid + 1;
+        }
+        else
+        {
+            right = mid;
+        }
+    }
+    return be + left;
+}
+template <typename T,typename G>
+T * upper_bound(T *be, T *ed, T dt, G comp )
+{
+    unsigned long long mid, left = 0, right = ed - be ;
+    while (left < right)
+    {
+        mid = left + (right - left) / 2;
+        if (!comp(dt,*(be + mid) ))
+        {
+            left = mid + 1;
+        }
+        else
+        {
+            right = mid;
+        }
+    }
+    return be + left;
+}
 // vector allocate mem : if capt fact < 0.5 or not enough : resize()
 // provide ADT : push_back(T data)  empty() T * begin() T* end()
-// T* lower_bound(T*begin , T* end ,T dt) T* lower_bound(T*begin , T* end ,T dt,void * comp)
-// T* upper_bound() T* find() void clear()
+//  void clear()
+
 template <typename T>
 class vector
 {
 private:
     T *_elem;
     T *_now;
-    unsigned int INIT_SIZE = 100;
-    unsigned int _size = 0;
-    unsigned int _capacity = 100;
+    const unsigned long long INIT_SIZE = 32;
+    const unsigned long long MIN_SIZE = 16; 
+    unsigned long long _size = 0;
+    unsigned long long _capacity = 32;
     void resize()
     {
-        if (_size > _capacity)
+        if (_size == _capacity)
         {
             _capacity = _capacity << 1;
             T *temp = new T[_capacity + 1];
-            for (int i = 0; i < _size; i++)
+            for (unsigned long long i = 0; i < _size; i++)
             {
                 temp[i] = _elem[i];
             }
@@ -36,11 +141,11 @@ private:
                 _now = _elem;
             }
         }
-        else if (_size < (_capacity >> 1))
+        else if (_size >= MIN_SIZE && _size < (_capacity >> 1))
         {
             _capacity = _capacity >> 1;
             T *temp = new T[_capacity + 1];
-            for (int i = 0; i < _size; i++)
+            for (unsigned long long i = 0; i < _size; i++)
             {
                 temp[i] = _elem[i];
             }
@@ -59,7 +164,7 @@ public:
     ~vector() { delete[] _elem; };
     vector()
     {
-        _elem = new T[INIT_SIZE];
+        _elem = new T[INIT_SIZE + 1];
         _size = 0;
         _capacity = INIT_SIZE;
         _now = _elem;
@@ -83,24 +188,42 @@ public:
     {
         return _elem + _size;
     }
-    T *lower_bound(T *begin, T *end, T dt)
-    {
-        return NULL;
-    }
-    T *lower_bound(T *begin, T *end, T dt, void *comp)
-    {
-        return NULL;
-    }
-    T *upper_bound()
-    {
-        return NULL;
-    }
     T *find()
     {
         return NULL;
     }
+    T *earse(const T *loc)
+    {
+        unsigned long long pos = loc - _elem;
+        for (unsigned long long i = pos; i < _size; i++)
+        {
+            _elem[i] = _elem[i + 1];
+        }
+        _size--;
+        resize();
+        return pos + _elem;
+    }
+    void pop_back()
+    {
+        _elem[_size - 1] = T();
+        _size--;
+        resize();
+    }
+
     void clear()
     {
+    }
+    unsigned long long size()
+    {
+        return _size;
+    }
+    unsigned long long capacity()
+    {
+        return _capacity;
+    }
+    inline T operator[](const unsigned long long pos) const
+    {
+        return *(_elem + pos);
     }
 };
 
@@ -117,7 +240,7 @@ public:
     {
         next = NULL;
         prev = NULL;
-        data = NULL;
+        data = T();
     }
     node(node<T> *pra, node<T> *nxt, T dt)
     {
@@ -141,7 +264,7 @@ template <typename T>
 class list : public node<T>
 {
 private:
-    unsigned int _size = 0;
+    unsigned long long _size = 0;
     node<T> *head;
     node<T> *tail;
 
@@ -179,9 +302,6 @@ public:
     }
     void pop_front()
     {
-        /*if(size()==0){//或许是这里出现了问题
-            return ;
-        }*/
         node<T> *p = head->next, *q;
         q = p->next;
         head->next = q;
@@ -219,9 +339,9 @@ public:
         }
         return NULL;
     }
-    int remove(unsigned int num)
+    int remove(unsigned long long num)
     {
-        unsigned int i = 0;
+        unsigned long long i = 0;
         node<T> *p = head, *before, *after;
         while (i <= num)
         {
@@ -252,7 +372,7 @@ public:
         }
         std::cout << endl;
     }
-    unsigned int size()
+    unsigned long long size()
     {
         return _size;
     }
@@ -301,7 +421,7 @@ public:
     {
         return s.empty();
     }
-    unsigned int size()
+    unsigned long long size()
     {
         return s.size();
     }
@@ -332,14 +452,14 @@ public:
     {
         return s.empty();
     }
-    unsigned int size()
+    unsigned long long size()
     {
         return s.size();
     }
 };
+int comp(int a, int b){return a<b;}
 int main()
 {
-    
     system("pause");
     return 0;
 }

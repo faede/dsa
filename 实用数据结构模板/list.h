@@ -4,7 +4,7 @@ template <typename T>
 class list : public node<T>
 {
 private:
-    unsigned int _size = 0;
+    unsigned long long _size = 0;
     node<T> *head;
     node<T> *tail;
 
@@ -42,9 +42,6 @@ public:
     }
     void pop_front()
     {
-        /*if(size()==0){//或许是这里出现了问题
-            return ;
-        }*/
         node<T> *p = head->next, *q;
         q = p->next;
         head->next = q;
@@ -82,9 +79,9 @@ public:
         }
         return NULL;
     }
-    int remove(unsigned int num)
+    int remove(unsigned long long num)
     {
-        unsigned int i = 0;
+        unsigned long long i = 0;
         node<T> *p = head, *before, *after;
         while (i <= num)
         {
@@ -115,7 +112,7 @@ public:
         }
         std::cout << endl;
     }
-    unsigned int size()
+    unsigned long long size()
     {
         return _size;
     }

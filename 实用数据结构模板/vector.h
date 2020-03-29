@@ -1,24 +1,24 @@
-/**************         单独实现了数据结构模板 所以直接套用。 剩余部分待完善     *******************************/
 // vector allocate mem : if capt fact < 0.5 or not enough : resize()
 // provide ADT : push_back(T data)  empty() T * begin() T* end()
-// T* lower_bound(T*begin , T* end ,T dt) T* lower_bound(T*begin , T* end ,T dt,void * comp)
-// T* upper_bound() T* find() void clear()
+//  void clear()
+
 template <typename T>
 class vector
 {
 private:
     T *_elem;
     T *_now;
-    unsigned int INIT_SIZE = 100;
-    unsigned int _size = 0;
-    unsigned int _capacity = 100;
+    const unsigned long long INIT_SIZE = 32;
+    const unsigned long long MIN_SIZE = 16; 
+    unsigned long long _size = 0;
+    unsigned long long _capacity = 32;
     void resize()
     {
-        if (_size > _capacity)
+        if (_size == _capacity)
         {
             _capacity = _capacity << 1;
             T *temp = new T[_capacity + 1];
-            for (int i = 0; i < _size; i++)
+            for (unsigned long long i = 0; i < _size; i++)
             {
                 temp[i] = _elem[i];
             }
@@ -31,11 +31,11 @@ private:
                 _now = _elem;
             }
         }
-        else if (_size < (_capacity >> 1))
+        else if (_size >= MIN_SIZE && _size < (_capacity >> 1))
         {
             _capacity = _capacity >> 1;
             T *temp = new T[_capacity + 1];
-            for (int i = 0; i < _size; i++)
+            for (unsigned long long i = 0; i < _size; i++)
             {
                 temp[i] = _elem[i];
             }
@@ -54,7 +54,7 @@ public:
     ~vector() { delete[] _elem; };
     vector()
     {
-        _elem = new T[INIT_SIZE];
+        _elem = new T[INIT_SIZE + 1];
         _size = 0;
         _capacity = INIT_SIZE;
         _now = _elem;
@@ -78,23 +78,41 @@ public:
     {
         return _elem + _size;
     }
-    T *lower_bound(T *begin, T *end, T dt)
-    {
-        return NULL;
-    }
-    T *lower_bound(T *begin, T *end, T dt, void *comp)
-    {
-        return NULL;
-    }
-    T *upper_bound()
-    {
-        return NULL;
-    }
     T *find()
     {
         return NULL;
     }
+    T *earse(const T *loc)
+    {
+        unsigned long long pos = loc - _elem;
+        for (unsigned long long i = pos; i < _size; i++)
+        {
+            _elem[i] = _elem[i + 1];
+        }
+        _size--;
+        resize();
+        return pos + _elem;
+    }
+    void pop_back()
+    {
+        _elem[_size - 1] = T();
+        _size--;
+        resize();
+    }
+
     void clear()
     {
+    }
+    unsigned long long size()
+    {
+        return _size;
+    }
+    unsigned long long capacity()
+    {
+        return _capacity;
+    }
+    inline T operator[](const unsigned long long pos) const
+    {
+        return *(_elem + pos);
     }
 };
